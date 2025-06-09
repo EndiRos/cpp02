@@ -6,7 +6,7 @@
 /*   By: enetxeba <enetxeba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:02:56 by enetxeba          #+#    #+#             */
-/*   Updated: 2025/06/09 13:09:24 by enetxeba         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:13:27 by enetxeba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,3 @@ int Fixed::getRawBits(void) const
     return (_raw);
 }
 
-float  Fixed::toFloat() const
-{
-    return  static_cast <float>( _raw) / (1 << _fractional_bits);
-}
-
-int Fixed::toInt() const
-{
-    return _raw >> _fractional_bits;
-}

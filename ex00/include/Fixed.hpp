@@ -6,7 +6,7 @@
 /*   By: enetxeba <enetxeba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 09:50:35 by enetxeba          #+#    #+#             */
-/*   Updated: 2025/06/09 12:48:44 by enetxeba         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:13:35 by enetxeba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ class Fixed
     
     int getRawBits(void) const ;
     void setRawBits( int const raw);
-    float toFloat() const;
-    int toInt() const;
     
     private:
     int _raw;
