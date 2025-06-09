@@ -1,44 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*    Fixed.cpp                                         :+:      :+:    :+:   */
+/*   Fixed.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enetxeba <enetxeba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:02:56 by enetxeba          #+#    #+#             */
-/*   Updated: 2025/06/09 11:12:06 by enetxeba         ###   ########.fr       */
+/*   Updated: 2025/06/09 13:09:24 by enetxeba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 
-Fixed::fixed() : _raw(0)
+int Fixed::_fractional_bits = 16; // Inicialización del miembro estático constante
+
+Fixed::Fixed() : _raw(0)
 {
     std::cout << "Default constructor called" << std::endl;
 }
 
 Fixed::Fixed(float raw)
 {
-    std::cout << "Constructor called not default value" << std::endl;
+    std::cout << "Parameterized constructor called" << std::endl;
     _raw = static_cast <int> (round (raw * (1 << _fractional_bits)));
 }
-Fixed& operator= (Fixed& const other)
+
+Fixed& Fixed::operator= (const Fixed& other)
 {
-    if (this != other)
+    if (this != &other)
     {
         std::cout << "Copy assignment operator called" << std::endl;
-        _raw = other._raw;
+        this->_raw = other.getRawBits();
     }
     return *this;
 }
 
-Fixed::Fixed (Fixed& const other)
+Fixed::Fixed(const Fixed& other)
 {
     std::cout << "Copy constructor called" << std::endl;
-    this->_raw = other._raw;
+    *this = other;  
 }
 
-Fixed::~Fixed(){}
+Fixed::~Fixed()
+{
+    std::cout << "Destructor called" << std::endl;
+}
 
 void Fixed::setRawBits(int const raw)
 {
@@ -47,5 +53,16 @@ void Fixed::setRawBits(int const raw)
 
 int Fixed::getRawBits(void) const
 {
+    std::cout << "getRawBits member function call" << std::endl; 
     return (_raw);
+}
+
+float  Fixed::toFloat() const
+{
+    return  static_cast <float>( _raw) / (1 << _fractional_bits);
+}
+
+int Fixed::toInt() const
+{
+    return _raw >> _fractional_bits;
 }

@@ -1,22 +1,20 @@
-XC = g++
-XXFLAGS = -Wall -Werroe -Wextra -std=c++98 -g 
+CC = g++
+FLAGS = -Werror -Wextra -Wall -std=c++98 -g
+SRC= src/Fixed.cpp src/main.cpp
 INCLUDE = -I include
-SRC = src/Fixed.cpp src/main.cc
-OBJ = $(SRC=.cpp : .o)
+OBJ = $(SRC:.cpp=.o)
 NAME = ex00
 
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	$(XC) $(XXFLAGS) $(INCLUDE) $(OBJ) -o $(NAME)
+$(NAME) : $(OBJ)
+	$(CC) $(FLAGS) $(INCLUDE) $(OBJ) -o $(NAME)
 
 %.o : %.cpp
-	$(XC) $(XXFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDE) -c $< -o $@
 
-clean: 
+clean:
 	rm -fr $(OBJ)
 
 fclean: clean
-	rm -fr $(NAME)
+	rm -fr $(OBJ) $(NAME)
 
-re: fclean all
+re:	fclean $(NAME)
