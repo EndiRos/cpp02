@@ -6,23 +6,43 @@
 /*   By: enetxeba <enetxeba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 11:26:50 by enetxeba          #+#    #+#             */
-/*   Updated: 2025/06/10 09:20:46 by enetxeba         ###   ########.fr       */
+/*   Updated: 2025/06/10 12:48:15 by enetxeba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Fixed.hpp"
+#include "Point.hpp"
 #include <iostream>
 
-int main( void )
+Fixed sign(const Point& p1, const Point& p2, const Point& p3)
 {
-    Fixed a;
-    Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
-    std::cout << a << std::endl;
-    std::cout << ++a << std::endl;
-    std::cout << a << std::endl;
-    std::cout << a++ << std::endl;
-    std::cout << a << std::endl;
-    std::cout << b << std::endl;
-    std::cout << Fixed::max( a, b ) << std::endl;
+    return (p1.get_x() - p3.get_x()) * (p2.get_y() - p3.get_y()) - (p2.get_x() - p3.get_x()) * (p1.get_y() - p3.get_y());
+}
+
+bool bsp(const Point& a, const Point& b, const Point& c, const Point& point)
+{
+    Fixed d1 = sign(point, a, b);
+    Fixed d2 = sign(point, b, c);
+    Fixed d3 = sign(point, c, a);
+
+    bool has_neg = (d1 < Fixed(0)) || (d2 < Fixed(0)) || (d3 < Fixed(0));
+    bool has_pos = (d1 > Fixed(0)) || (d2 > Fixed(0)) || (d3 > Fixed(0));
+
+    return !(has_neg && has_pos);
+}
+
+int main()
+{
+    Point a;
+    Point b(Fixed(10.25f), Fixed(0.0f));
+    Point c(Fixed(14), Fixed(5.16458f));
+    Point point(Fixed(9.1f), Fixed(15.8f));
+
+    bool res = bsp(a, b, c, point);
+
+    if (res)
+        std::cout << "point is inside\n";
+    else
+        std::cout << "point is outside\n";
+
     return 0;
 }

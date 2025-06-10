@@ -1,9 +1,9 @@
 CC = g++
 FLAGS = -Werror -Wextra -Wall -std=c++98 -g
-SRC= src/Fixed.cpp src/main.cpp
+SRC= src/Fixed.cpp src/main.cpp src/Point.cpp
 INCLUDE = -I include
 OBJ = $(SRC:.cpp=.o)
-NAME = ex02
+NAME = ex03
 
 $(NAME) : $(OBJ)
 	$(CC) $(FLAGS) $(INCLUDE) $(OBJ) -o $(NAME)
