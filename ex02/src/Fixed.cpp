@@ -6,7 +6,7 @@
 /*   By: enetxeba <enetxeba@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 10:02:56 by enetxeba          #+#    #+#             */
-/*   Updated: 2025/06/09 13:48:09 by enetxeba         ###   ########.fr       */
+/*   Updated: 2025/06/10 09:44:00 by enetxeba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,15 @@ int Fixed::_fractional_bits = 8; // Inicialización del miembro estático consta
 
 Fixed::Fixed() : _raw(0)
 {
-    std::cout << "Default constructor called" << std::endl;
+    ;
 }
 Fixed::Fixed(int raw)
 {
-    std::cout << "Integer constructor called" << std::endl;
     _raw = raw  << _fractional_bits;
 }
 
 Fixed::Fixed(float raw)
 {
-    std::cout << "float constructor called" << std::endl;
     _raw = static_cast <int> (round (raw * (1 << _fractional_bits)));
 }
 
@@ -34,7 +32,6 @@ Fixed& Fixed::operator= (const Fixed& other)
 {
     if (this != &other)
     {
-        std::cout << "Copy assignment operator called" << std::endl;
         this->_raw = other.getRawBits();
     }
     return *this;
@@ -42,13 +39,11 @@ Fixed& Fixed::operator= (const Fixed& other)
 
 Fixed::Fixed(const Fixed& other)
 {
-    std::cout << "Copy constructor called" << std::endl;
     *this = other;  
 }
 
 Fixed::~Fixed()
 {
-    std::cout << "Destructor called" << std::endl;
 }
 
 void Fixed::setRawBits(int const raw)
@@ -58,7 +53,6 @@ void Fixed::setRawBits(int const raw)
 
 int Fixed::getRawBits(void) const
 {
-    std::cout << "getRawBits member function call" << std::endl; 
     return (_raw);
 }
 
@@ -77,3 +71,99 @@ std::ostream& operator << (std::ostream& os, const Fixed& other)
     os << other.toFloat();
     return os; 
 }
+
+bool operator == (const Fixed& first, const Fixed& second)
+{
+    return (first.toFloat()== second.toFloat());
+}
+
+bool operator != (const Fixed& first, const Fixed& second)
+{
+    return (first.toFloat()!= second.toFloat());
+}
+
+bool operator < (const Fixed& first, const Fixed& second)
+{
+    return (first.toFloat() < second.toFloat());
+}
+
+bool operator <= (const Fixed& first, const Fixed& second)
+{
+    return (first.toFloat()<= second.toFloat());
+}
+
+bool operator > (const Fixed& first, const Fixed& second)
+{
+    return (first.toFloat() > second.toFloat());
+}
+
+bool operator >= (const Fixed& first, const Fixed& second)
+{
+    return (first.toFloat()>= second.toFloat());
+}
+
+Fixed Fixed::operator+(const Fixed& other) const
+{
+    return Fixed (this->toFloat() + other.toFloat());
+}
+
+Fixed Fixed::operator - (const Fixed& other) const
+{
+    return Fixed (this->toFloat() - other.toFloat());
+}
+
+Fixed Fixed::operator* (const Fixed& other) const
+{
+    return Fixed (this->toFloat() * other.toFloat());
+}
+
+Fixed Fixed::operator / (const Fixed& other) const
+{
+    if (other.toFloat() == 0)
+        return Fixed();
+    return Fixed (this->toFloat() / other.toFloat());
+}
+
+Fixed& Fixed::operator ++()
+{
+    Fixed& tmp = *this;
+    _raw ++;
+    return tmp; 
+}
+
+Fixed Fixed::operator ++(int)
+{
+    _raw ++;
+    return *this;
+}
+
+Fixed& Fixed::operator --()
+{
+    Fixed& tmp = *this;
+    _raw --;
+    return tmp; 
+}
+
+Fixed Fixed::operator --(int)
+{
+    _raw --;
+    return *this;
+}
+
+Fixed& Fixed::min (Fixed& a, Fixed& b)
+{
+    return ((a < b) ? a : b);
+}
+const Fixed& Fixed::min (const Fixed& a, const Fixed& b)
+{
+    return ((a < b) ? a : b);
+}
+Fixed& Fixed::max(Fixed& a, Fixed& b)
+{
+    return ((a > b) ? a : b);
+}
+const Fixed& Fixed::max (const Fixed& a, const Fixed& b) 
+{
+    return ((a > b) ? a : b);
+}
+

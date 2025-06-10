@@ -3,7 +3,7 @@ FLAGS = -Werror -Wextra -Wall -std=c++98 -g
 SRC= src/Fixed.cpp src/main.cpp
 INCLUDE = -I include
 OBJ = $(SRC:.cpp=.o)
-NAME = ex01
+NAME = ex02
 
 $(NAME) : $(OBJ)
 	$(CC) $(FLAGS) $(INCLUDE) $(OBJ) -o $(NAME)
